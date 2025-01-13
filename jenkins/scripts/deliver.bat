@@ -19,14 +19,15 @@ echo of the previously run process (i.e. "npm start") and writes this value to
 echo the file ".pidfile".
 echo on
 start /B npm start
-timeout 1
-for /f "tokens=2 delims=," %%i in ('tasklist /nh /fi "imagename eq node.exe" /fo csv') do (
+timeout 5
+for /f "tokens=2 delims=," %%i in ('tasklist /fi "imagename eq node.exe" /fo csv') do (
     echo %%i > .pidfile
+    goto end
 )
+:end
 echo off
 
 echo Now...
 echo Visit http://localhost:3000 to see your Node.js/React application in action.
 echo (This is why you specified the "args ''-p 3000:3000''" parameter when you
 echo created your initial Pipeline as a Jenkinsfile.)
-
