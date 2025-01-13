@@ -14,13 +14,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh './jenkins/scripts/test.sh'
-                    } else {
-                        bat 'jenkins\\scripts/test.sh'
-                    }
-                }
+                sh './jenkins/scripts/test.sh'
             }
         }
     }
