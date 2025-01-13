@@ -3,7 +3,13 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'npm install' 
+                script {
+                    if (isUnix()) {
+                        sh 'npm install'
+                    } else {
+                        bat 'npm install'
+                    }
+                }
             }
         }
     }
