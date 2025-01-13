@@ -2,7 +2,7 @@
 
 echo The following "npm" command builds your Node.js/React application for
 echo production in the local "build" directory (i.e. within the
-echo "C:\ProgramData\Jenkins\.jenkins\workspace\simple-node-js-react-app" directory),
+echo "C:\ProgramData\Jenkins\.jenkins\workspace\simple-node-js-react-npm-app" directory),
 echo correctly bundles React in production mode and optimizes the build for
 echo the best performance.
 echo on
@@ -20,12 +20,24 @@ echo the file ".pidfile".
 echo on
 start /B npm start
 timeout 5
+
+REM Capture the PID of the npm start process
 for /f "tokens=2 delims=," %%i in ('tasklist /fi "imagename eq node.exe" /fo csv') do (
     echo %%i > .pidfile
+    echo Captured PID: %%i
     goto end
 )
 :end
 echo off
+
+REM Verify the .pidfile creation
+if exist .pidfile (
+    echo ".pidfile created successfully."
+    type .pidfile
+) else (
+    echo "Error: .pidfile not found."
+    exit /b 1
+)
 
 echo Now...
 echo Visit http://localhost:3000 to see your Node.js/React application in action.
